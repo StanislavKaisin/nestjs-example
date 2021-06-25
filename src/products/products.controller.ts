@@ -1,10 +1,20 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('products')
 export class ProductsController {
   @Get()
-  getAll(): string{
-    return 'getAll'
+  getAll(): string {
+    return 'getAll';
   }
 
   // get param using decorator
@@ -15,22 +25,24 @@ export class ProductsController {
   }
 */
   @Get(':id')
-  getOne(@Param('id') id: string): string{
-    return 'getOne ' +id
+  getOne(@Param('id') id: string): string {
+    return 'getOne ' + id;
   }
 
-@Post()
-  create(@Body() body){
-    //
+  @Post()
+  create(@Body() createProductDto: CreateProductDto) {
+    return `Title=${createProductDto.title}, Price=${createProductDto.price}`;
   }
 
-  @Delete()
-  remove(){
+  @Delete(':id')
+  remove(@Param('id') id: string) {
     //
+    return `Remove: ${id}`;
   }
 
-  @Put()
-  update(){
+  @Put(':id')
+  update(@Body() updateProductDto: UpdateProductDto, @Param('id') id: string) {
     //
+    return `Update: ${id}`;
   }
 }
