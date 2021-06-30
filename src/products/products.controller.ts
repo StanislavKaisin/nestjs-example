@@ -15,15 +15,23 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
 import { Request, Response } from 'express';
+import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
+  constructor(private readonly productService: ProductsService) {
+    //
+  }
+  // express style
+  /*
   @Get()
   // @Redirect('https://google.com', 301)
   getAll(@Req() req: Request, @Res() res: Response): string {
     res.status(201).end('hello');
     return 'getAll';
   }
+
+  */
 
   // get param using decorator
   /*
@@ -40,17 +48,25 @@ app.use((req, res, next) => {
   res.status(201).end('hello')
 })
 */
+  @Get()
+  // @Redirect('https://google.com', 301)
+  getAll(): any {
+    // return 'getAll';
+    return this.productService.getAll();
+  }
 
   @Get(':id')
   getOne(@Param('id') id: string): string {
-    return 'getOne ' + id;
+    // return 'getOne ' + id;
+    return this.productService.getById(id);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @Header('Cach-Control', 'none')
+  // @Header('Cach-Control', 'none')
   create(@Body() createProductDto: CreateProductDto) {
-    return `Title=${createProductDto.title}, Price=${createProductDto.price}`;
+    // return `Title=${createProductDto.title}, Price=${createProductDto.price}`;
+    return this.productService.create(createProductDto);
   }
 
   @Delete(':id')
