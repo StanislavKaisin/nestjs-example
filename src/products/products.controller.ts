@@ -16,6 +16,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 
 import { Request, Response } from 'express';
 import { ProductsService } from './products.service';
+import { Product } from './schemas/product.schema';
 
 @Controller('products')
 export class ProductsController {
@@ -50,13 +51,13 @@ app.use((req, res, next) => {
 */
   @Get()
   // @Redirect('https://google.com', 301)
-  getAll(): any {
+  getAll(): Promise<Product[]> {
     // return 'getAll';
     return this.productService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string): string {
+  getOne(@Param('id') id: string): Promise<Product> {
     // return 'getOne ' + id;
     return this.productService.getById(id);
   }
@@ -64,20 +65,25 @@ app.use((req, res, next) => {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   // @Header('Cach-Control', 'none')
-  create(@Body() createProductDto: CreateProductDto) {
+  create(@Body() createProductDto: CreateProductDto): Promise<Product> {
     // return `Title=${createProductDto.title}, Price=${createProductDto.price}`;
     return this.productService.create(createProductDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<Product> {
     //
-    return `Remove: ${id}`;
+    // return `Remove: ${id}`;
+    return this.productService.remove(id);
   }
 
   @Put(':id')
-  update(@Body() updateProductDto: UpdateProductDto, @Param('id') id: string) {
+  update(
+    @Body() updateProductDto: UpdateProductDto,
+    @Param('id') id: string,
+  ): Promise<Product> {
     //
-    return `Update: ${id}`;
+    // return `Update: ${id}`;
+    return this.productService.update(id, updateProductDto);
   }
 }

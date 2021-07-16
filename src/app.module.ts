@@ -11,7 +11,7 @@ import { ProductsModule } from './products/products.module';
   imports: [
     ProductsModule,
     MongooseModule.forRoot(
-      `mongodb+srv://Stanislav:S9cHWf3TtYVkCMbu@cluster0.vizvr.mongodb.net/products?retryWrites=true&w=majority`,
+      `mongodb+srv://Stanislav:S9cHWf3TtYVkCMbu@cluster0.vizvr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
     ),
   ],
   controllers: [AppController],
